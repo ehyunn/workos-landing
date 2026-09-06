@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work OS — Landing Page Drop Servicing</title>
+<style>
+:root{
+  --bg:#0F1115; --panel:#181B21; --panel2:#1F232B; --line:#2A2F38;
+  --ink:#E8EAED; --dim:#9AA3AE; --acc:#4F9CF9; --green:#34D399; --amber:#FBBF24; --red:#F87171;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px}
+button{font-family:inherit;cursor:pointer}
+a{color:var(--acc);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* layout */
+header{position:sticky;top:0;z-index:20;background:rgba(15,17,21,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.h-in{max-width:1280px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.logo{font-weight:700;font-size:1.05rem}
+.logo span{color:var(--acc)}
+.stats{display:flex;gap:14px;margin-left:auto;flex-wrap:wrap}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:7px 14px;font-size:.8rem;color:var(--dim)}
+.stat b{color:var(--ink);font-size:1rem;display:block;line-height:1.2}
+.tabs{max-width:1280px;margin:0 auto;padding:10px 22px 0;display:flex;gap:6px;flex-wrap:wrap}
+.tab{background:none;border:1px solid transparent;color:var(--dim);padding:8px 16px;border-radius:8px;font-size:.88rem;font-weight:500}
+.tab:hover{color:var(--ink)}
+.tab.active{background:var(--panel2);border-color:var(--line);color:var(--ink)}
+main{max-width:1280px;margin:0 auto;padding:22px}
+.view{display:none}
+.view.active{display:block}
+h2{font-size:1.15rem;margin-bottom:14px}
+h3{font-size:.95rem;margin-bottom:8px;color:var(--ink)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}}
+.muted{color:var(--dim);font-size:.85rem}
+code,.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem}
+code{background:var(--panel2);padding:2px 7px;border-radius:5px}
+pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:.78rem;line-height:1.5}
+.copybtn{background:var(--panel2);border:1px solid var(--line);color:var(--acc);border-radius:6px;padding:4px 10px;font-size:.72rem;margin-top:6px}
+.copybtn:hover{border-color:var(--acc)}
+.ok{color:var(--green)}.warn{color:var(--amber)}.bad{color:var(--red)}
+
+/* checklist */
+.chk{display:flex;gap:10px;align-items:flex-start;padding:9px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.chk:last-child{border-bottom:none}
+.chk input{margin-top:4px;accent-color:var(--acc)}
+.chk.done span{text-decoration:line-through;color:var(--dim)}
+.chk span{flex:1}
+
+/* tracker table */
+.tbl{width:100%;border-collapse:collapse;font-size:.84rem}
+.tbl th{background:var(--panel2);color:var(--dim);text-align:left;padding:10px 12px;font-weight:600;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;position:sticky;top:0}
+.tbl td{padding:11px 12px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:hover td{background:var(--panel2)}
+.tbl select{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:.78rem}
+.tbl input[type=date]{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:.78rem;color-scheme:dark}
+.status-not-sent{color:var(--dim)} .status-sent{color:var(--amber)} .status-followed{color:var(--acc)} .status-replied{color:var(--green)} .status-interested{color:var(--green);font-weight:700} .status-declined{color:var(--red)}
+.demosend{color:var(--acc);font-size:.75rem;display:block}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.tablewrap table{min-width:980px}
+
+/* DM copy cards */
+.dmcard{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px;white-space:pre-wrap;font-size:.87rem}
+.dmhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.dmhead b{color:var(--acc);font-size:.86rem}
+.togglebtn{background:none;border:none;color:var(--dim);font-size:.78rem}
+.hidden{display:none}
+
+/* rationale / playbook */
+.pb h3{margin:18px 0 8px;color:var(--acc)}
+.pb p{margin-bottom:10px;color:var(--dim);font-size:.9rem}
+.pb strong{color:var(--ink)}
+.callout{background:var(--panel2);border-left:3px solid var(--acc);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.88rem}
+
+/* pipeline visual */
+.pipe{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.pstep{flex:1;min-width:130px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center}
+.pstep .n{font-family:var(--sans);font-size:.7rem;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+.pstep .t{font-weight:600;font-size:.9rem;margin-top:3px}
+.pstep .who{font-size:.72rem;color:var(--acc);margin-top:4px}
+
+.demo-card{display:flex;gap:16px;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;flex-wrap:wrap}
+.demo-cat{font-family:var(--head);font-size:1rem;min-width:110px}
+.demo-biz{flex:1;font-size:.83rem;color:var(--dim)}
+.badge{font-size:.68rem;padding:3px 10px;border-radius:999px;background:var(--panel);border:1px solid var(--line);color:var(--dim)}
+.badge.live{color:var(--green);border-color:var(--green)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-in">
+    <div class="logo">Work<span>OS</span> — Landing Page Drop Servicing</div>
+    <div class="stats">
+      <div class="stat"><b id="st-total">14</b> leads Tier A</div>
+      <div class="stat"><b id="st-sent">0</b> terkirim</div>
+      <div class="stat"><b id="st-replied">0</b> dibalas</div>
+      <div class="stat"><b id="st-interested">0</b> interested</div>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-v="daily">📋 Hari ini</button>
+    <button class="tab" data-v="outreach">📬 Outreach</button>
+    <button class="tab" data-v="dms">💬 Draft DM</button>
+    <button class="tab" data-v="demos">🎨 Demo & Layout</button>
+    <button class="tab" data-v="tools">🛠 Tools & SOP</button>
+    <button class="tab" data-v="playbook">📕 Playbook</button>
+    <button class="tab" data-v="tierb">📦 Tier B (nanti)</button>
+  </div>
+</header>
+
+<main>
+<!-- ================= DAILY ================= -->
+<section class="view active" id="v-daily">
+  <div class="pipe">
+    <div class="pstep"><div class="n">1 · senin-sabtu</div><div class="t">Scrape leads</div><div class="who">Hermes/tools</div></div>
+    <div class="pstep"><div class="n">2 · saat scrape</div><div class="t">Verifikasi no-web</div><div class="who">Hermes</div></div>
+    <div class="pstep"><div class="n">3 · per kategori</div><div class="t">Demo landing</div><div class="who">Hermes, kamu review</div></div>
+    <div class="pstep"><div class="n">4 · 9-11 malam</div><div class="t">Kirim DM</div><div class="who">KAMU</div></div>
+    <div class="pstep"><div class="n">5 · H+4/5</div><div class="t">Follow-up</div><div class="who">KAMU</div></div>
+    <div class="pstep"><div class="n">6 · saat reply</div><div class="t">Close + onboarding</div><div class="who">KAMU + Hermes draft</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>✅ Rutin harian (30-60 mnt)</h3>
+      <div id="daily-chk"></div>
+    </div>
+    <div class="card">
+      <h3>📅 Rutin mingguan</h3>
+      <div id="weekly-chk"></div>
+      <h3 style="margin-top:20px">🎯 Saat ada yang interested</h3>
+      <div id="close-chk"></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>⚡ Shortcut skenario balasan</h3>
+    <p class="muted" style="margin-bottom:10px">Klik skenario, salin jawabannya (ganti [bracket] dulu):</p>
+    <div id="replies"></div>
+  </div>
+</section>
+
+<!-- ================= OUTREACH ================= -->
+<section class="view" id="v-outreach">
+  <div class="callout" style="margin-bottom:14px">
+    <strong>Cara pakai:</strong> klik baris untuk ubah status & tanggal. Status otomatis tersimpan di browser ini (localStorage).
+    Kirim DM jam <strong>9-11 malam WIB</strong> (= pagi di Austin). Maks 2 pesan per lead (opener + 1 follow-up), ghosting = move on.
+  </div>
+  <div class="tablewrap">
+    <table class="tbl">
+      <thead><tr>
+        <th>#</th><th>Lead</th><th>Rating</th><th>Channel</th><th>Demo</th><th>Status</th><th>Tgl kirim</th><th>Tgl follow-up</th><th>Catatan</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <p class="muted" style="margin-top:10px">Export ulang CSV: <button class="copybtn" onclick="exportCSV()">⬇ Export tracker CSV</button> <span id="export-note"></span></p>
+</section>
+
+<!-- ================= DM ================= -->
+<section class="view" id="v-dms">
+  <div class="callout">Draft personal per-lead. <strong>Ganti nggak ada yang perlu diganti</strong> — semuanya udah final. Tinggal copy → paste di IG/FB. Yang belum ada demonya (Century) → tawarkan bikin konsep dulu.</div>
+  <div id="dm-list"></div>
+</section>
+
+<!-- ================= DEMOS ================= -->
+<section class="view" id="v-demos">
+  <div class="callout">Prinsip: <strong>research bisnis → rationale → kamu approve → build → audit AI → verifikasi visual → deploy.</strong> Tiap kategori punya layout sendiri, bukan re-skin.</div>
+  <div id="demo-list"></div>
+  <div class="card" style="margin-top:16px">
+    <h3>📸 Sumber foto gratis (verifikasi dulu via vision!)</h3>
+    <p class="muted">Pexels: <code>images.pexels.com/photos/{id}/pexels-photo-{id}.jpeg?auto=compress&cs=tinysrgb&w=1200</code> · Openverse API (CC0/PDM): <code>api.openverse.org/v1/images/?q=QUERY&license=cc0,pdm</code> · Hati-hati: banyak hasil Flicker itu foto amatir/iklan — WAJIB dicek visual & watermark sebelum dipakai.</p>
+  </div>
+</section>
+
+<!-- ================= TOOLS ================= -->
+<section class="view" id="v-tools">
+  <div class="grid2">
+    <div class="card">
+      <h3>🗺 Scrape Google Maps (gratis, Docker)</h3>
+      <pre id="cmd-scrape"></pre>
+      <button class="copybtn" onclick="cp('cmd-scrape')">Copy</button>
+      <p class="muted" style="margin-top:8px">queries.txt = 1 query per baris (mis. <code>barbershop in Dallas TX</code>). Depth 10 + 8 kategori ≈ 30-45 mnt, hasil ~600 leads. <strong>Wajib verifikasi manual</strong> — rasio no-website asli cuma ~4-7%.</p>
+    </div>
+    <div class="card">
+      <h3>🗺 Scrape OSM (backup, gratis)</h3>
+      <pre id="cmd-osm"></pre>
+      <button class="copybtn" onclick="cp('cmd-osm')">Copy</button>
+      <p class="muted" style="margin-top:8px">Data kasar — banyak false positive "no website". Hanya buat discovery, jangan pernah pitch tanpa verifikasi web search.</p>
+    </div>
+    <div class="card">
+      <h3>🤖 Audit pipeline (tiap demo SEBELUM deploy)</h3>
+      <ol style="color:var(--dim);font-size:.88rem;padding-left:18px;display:grid;gap:6px">
+        <li>Riset bisnis via web_search (sejarah, review themes, kompetitor, keluhan)</li>
+        <li>Tulis rationale 5-6 baris → <strong>tampilkan ke user dulu</strong></li>
+        <li>Build HTML (layout beda dari demo lain, foto CC0 terverifikasi visual)</li>
+        <li>Audit Gemini 3.7 Flash — kasih rationale di prompt, minta hitung kontras</li>
+        <li><strong>Hitung ulang kontras sendiri</strong> (Python, jangan percaya angka model)</li>
+        <li>Deploy Pages → <strong>verifikasi visual browser</strong> (CTA text+color, gambar loaded)</li>
+        <li>Push audit report ke repo</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>🚀 Deploy GitHub Pages (akun ehyunn)</h3>
+      <ol style="color:var(--dim);font-size:.88rem;padding-left:18px;display:grid;gap:6px">
+        <li>POST /user/repos (PAT: Administration R/W)</li>
+        <li>git init -b main → commit → push (PAT: Contents R/W)</li>
+        <li>POST /repos/{o}/{r}/pages {"source":{"branch":"main","path":"/"}}</li>
+        <li>Live dalam 60-90 detik di <code>https://ehyunn.github.io/{repo}/</code></li>
+        <li>⚠️ PAT jangan pernah masuk file/repo — revoke setelah pakai</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>💰 Ekonomi per project</h3>
+    <div class="tbl" style="font-size:.85rem">
+      <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--line)"><span>Harga jual landing page</span><b style="color:var(--green)">$250</b></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--line)"><span>Token build + audit + foto</span><b>-$0.10</b></div>
+      <div style="display:grid;justify-content:space-between;padding:8px 12px"><span>Domain+hosting (dibayar klien, kamu setup)</span><b style="color:var(--dim)">passthrough</b></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 12px;font-size:1rem"><span><b>Margin</b></span><b style="color:var(--green)">≈ $249.90 (99.9%)</b></div>
+    </div>
+    <p class="muted" style="margin-top:10px">Upsell nanti: maintenance $20-30/bln, logo, Google Business Profile optimization.</p>
+  </div>
+</section>
+
+<!-- ================= PLAYBOOK ================= -->
+<section class="view" id="v-playbook">
+  <div class="card pb" id="pb-body"></div>
+</section>
+
+<!-- ================= TIER B ================= -->
+<section class="view" id="v-tierb">
+  <div class="callout">20 leads rating 4.0-4.4 atau review < 100. Jangan dipitch dulu — tunggu Tier A kelar atau ada demo barbershop/auto. Data mentah dari scrape besar Sept 6.</div>
+  <div class="tablewrap">
+    <table class="tbl">
+      <thead><tr><th>Bisnis</th><th>Kategori</th><th>Telp</th><th>Rating</th></tr></thead>
+      <tbody id="tierb-body"></tbody>
+    </table>
+  </div>
+</section>
+</main>
+
+<script>
+const DATA = {"tracker": [{"priority": "1", "lead": "Amor Nails & Spa", "phone": "+1 512-326-8383", "rating_reviews": "4.900000★/4210", "channel": "IG+FB DM", "demo_to_send": "amor-nails-landing", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}, {"priority": "2", "lead": "North Lamar Veterinary Clinic", "phone": "+1 512-836-2888", "rating_reviews": "4.900000★/2539", "channel": "FB DM (ResearchBlvdPet)", "demo_to_send": "northlamar-vet-landing", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}, {"priority": "3", "lead": "Auto 7 Tech", "phone": "+1 512-873-9354", "rating_reviews": "4.800000★/514", "channel": "email/SMS only", "demo_to_send": "(need demo or reuse)", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}, {"priority": "4", "lead": "Balcones Animal Hospital Inc", "phone": "+1 512-258-4139", "rating_reviews": "4.700000★/488", "channel": "FB DM (ResearchBlvdPet)", "demo_to_send": "northlamar-vet (same industry)", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}, {"priority": "5", "lead": "Nail Bar Oak Hill", "phone": "+1 512-745-9004", "rating_reviews": "4.700000★/341", "channel": "email/SMS only", "demo_to_send": "amor (same industry)", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}, {"priority": "6", "lead": "Trnd Setters Barbershop", "phone": "+1 512-276-2706", "rating_reviews": "4.700000★/296", "channel": "IG DM (has Hutto site - weak pitch)", "demo_to_send": "(need demo or reuse)", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}, {"priority": "7", "lead": "Beautiful Scars Tattoo Shop", "phone": "+1 737-328-0886", "rating_reviews": "4.800000★/205", "channel": "email/SMS only", "demo_to_send": "(need demo or reuse)", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}, {"priority": "8", "lead": "Anderson Lane Barber Shop", "phone": "+1 512-302-0331", "rating_reviews": "4.700000★/197", "channel": "IG (weak) / SMS", "demo_to_send": "bobs (same industry)", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}, {"priority": "9", "lead": "South Congress Veterinary", "phone": "+1 512-442-7444", "rating_reviews": "4.700000★/196", "channel": "email/SMS only", "demo_to_send": "(need demo or reuse)", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}, {"priority": "10", "lead": "Luu Auto Repair", "phone": "+1 512-837-1417", "rating_reviews": "4.900000★/182", "channel": "email/SMS only", "demo_to_send": "(need demo or reuse)", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}, {"priority": "11", "lead": "Century Automotive", "phone": "+1 512-467-1255", "rating_reviews": "4.900000★/178", "channel": "FB+IG DM", "demo_to_send": "(need demo or reuse)", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}, {"priority": "12", "lead": "Bob's Barber Shop", "phone": "+1 512-339-1630", "rating_reviews": "4.700000★/173", "channel": "FB DM", "demo_to_send": "bobs-barber-landing", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}, {"priority": "13", "lead": "Hooky nails", "phone": "+1 737-209-0528", "rating_reviews": "4.500000★/157", "channel": "IG+FB DM", "demo_to_send": "amor (same industry)", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}, {"priority": "14", "lead": "Country Cutz Barbershop South Austin", "phone": "+1 512-375-8142", "rating_reviews": "4.700000★/129", "channel": "email/SMS only", "demo_to_send": "(need demo or reuse)", "date_sent": "", "followup_date": "", "status": "not sent", "notes": ""}], "tierB": [{"title": "Sweet Nails & Spa", "category": "Nail salon", "phone": "+1 512-916-0940", "review_rating": "4.100000", "review_count": "314"}, {"title": "Global Auto Service", "category": "Auto repair shop", "phone": "+1 512-443-9090", "review_rating": "4.200000", "review_count": "276"}, {"title": "Mobile Mechanic Austin", "category": "Auto repair shop", "phone": "+1 512-643-2407", "review_rating": "3.900000", "review_count": "118"}, {"title": "A-1 Automotive & Repair", "category": "Auto repair shop", "phone": "+1 512-837-1779", "review_rating": "4.300000", "review_count": "103"}, {"title": "Hyde Park Animal Clinic", "category": "Animal hospital", "phone": "+1 512-451-4781", "review_rating": "4.300000", "review_count": "78"}, {"title": "George Auto Repair & Inspections", "category": "Auto repair shop", "phone": "+1 512-799-4011", "review_rating": "4.700000", "review_count": "77"}, {"title": "Best Automotive", "category": "Auto repair shop", "phone": "+1 512-447-0447", "review_rating": "4.800000", "review_count": "70"}, {"title": "J R Automotive Repair", "category": "Auto repair shop", "phone": "+1 512-670-9089", "review_rating": "4.800000", "review_count": "55"}, {"title": "183 AUTO REPAIR", "category": "Auto repair shop", "phone": "+1 512-999-7854", "review_rating": "4.800000", "review_count": "53"}, {"title": "Neighborly Auto Repair", "category": "Auto repair shop", "phone": "+1 737-235-7155", "review_rating": "5.000000", "review_count": "48"}, {"title": "Ramirez Auto Repair", "category": "Auto repair shop", "phone": "+1 512-552-3091", "review_rating": "4.500000", "review_count": "48"}, {"title": "Adorable Grooming by Debbie", "category": "Pet groomer", "phone": "+1 512-280-6159", "review_rating": "4.900000", "review_count": "47"}, {"title": "The Dark Arts Tattoo", "category": "Tattoo shop", "phone": "", "review_rating": "4.900000", "review_count": "46"}, {"title": "Crestview Auto Repair", "category": "Auto repair shop", "phone": "+1 512-467-0765", "review_rating": "4.600000", "review_count": "42"}, {"title": "Hector's Barbershop", "category": "Barber shop", "phone": "+1 254-462-4706", "review_rating": "4.900000", "review_count": "39"}, {"title": "AJ Auto Repair", "category": "Auto repair shop", "phone": "+1 512-318-6256", "review_rating": "4.900000", "review_count": "38"}, {"title": "Fragment Tattoo", "category": "Tattoo shop", "phone": "", "review_rating": "5.000000", "review_count": "37"}, {"title": "Uptown Auto Repair", "category": "Auto repair shop", "phone": "+1 512-467-7363", "review_rating": "5.000000", "review_count": "24"}, {"title": "Ryan's Automotive Repair", "category": "Auto repair shop", "phone": "+1 512-243-1607", "review_rating": "4.900000", "review_count": "24"}, {"title": "All Breed Dog Grooming - Pet Spa", "category": "Pet groomer", "phone": "+1 512-299-1166", "review_rating": "4.000000", "review_count": "23"}], "playbook": "# OUTREACH PLAYBOOK — Tier A (14 leads, Austin TX)\nGenerated Sept 6, 2026. All messages written by Hermes, copy-paste ready.\nRULES: No phone calls (Yusril's preference). English messages. Send 7-9 PM WIB (= 7-9 AM their time... actually 12-2 PM their time — see timing note).\n\n## TIMING\nAustin is UTC-5 (CDT). Jakarta is UTC+7. Difference: 12 hours.\nBest send window: **9-11 PM WIB = 9-11 AM Austin** (they check messages in the morning).\nAvoid weekends for auto repair (closed Sun), fine for barsbershops (open Sat).\n\n## PRIORITY ORDER (best demo match + social channel available first)\n1. Amor Nails & Spa — has demo (Amor), IG/FB active → DM\n2. North Lamar Vet — has demo (Vet), FB active → FB DM\n3. Bob's Barber Shop — has demo (Bob's), FB active → FB DM\n4. Hooky nails — IG/FB active, no demo yet (can reuse Amor demo as \"same industry\" example)\n5. Century Automotive — FB/IG active, no demo yet\n6. Balcones Animal Hospital — FB active, can reuse Vet demo\n7. Anderson Lane Barber Shop — IG link weak (popular page), reuse Bob's demo\n8. Trnd Setters — IG active BUT they have a Hutto website already; pitch = Austin location page, weaker → skip for now\n9-12. No social found: South Congress Vet, Nail Bar Oak Hill, Beautiful Scars, Luu Auto, Auto 7, Country Cutz → later, via contact form/SMS if any\n\n## UNIVERSAL OPENERS (pick per business type, personalise the bracket)\n\n### NAIL SALON (Amor, Hooky, Nail Bar)\nDM/Email:\n> Hi! I'm Yusril, a web designer. I came across [NAME] — 4.9★ from [N] reviews is seriously impressive. I noticed there's no website, so I built a quick demo to show what it could look like: https://ehyunn.github.io/amor-nails-landing/\n> It's just a proposal (photos are placeholders), nothing published. If you like the direction, happy to adjust everything with your input. Either way, feel free to keep it!\n\n### VET CLINIC (North Lamar, Balcones, South Congress)\n> Hi! I'm Yusril, a web designer. I found [NAME] while looking at Austin vet clinics — since 1971 and a 4.9★ rating really stood out. I noticed there's no website, so I built a demo concept: https://ehyunn.github.io/northlamar-vet-landing/\n> Nothing published — just a design proposal (placeholder photos). Happy to tailor it with your input if you're interested, or it's yours to keep either way!\n\n### BARBERSHOP (Bob's, Anderson Lane, Country Cutz)\n> Hey! I'm Yusril, a web designer. [NAME] kept coming up as one of Austin's classic shops, so I built a quick demo site: https://ehyunn.github.io/bobs-barber-landing/\n> It's just a concept — placeholder photos & prices, nothing live. If it's useful, I'd love to make it real with your input. No pressure either way!\n\n### AUTO REPAIR (Luu, Century, Auto 7)\n> Hi! I'm Yusril, a web designer. Shops with 4.9★ ratings like [NAME] usually get found through Google — but there's no website telling that story. I built a quick demo concept: [LINK — to be built]\n> Just a proposal, nothing published. Happy to adjust with your input, or keep it free either way!\n\n## FOLLOW-UP (send 4-5 days later if no reply)\n> Just floating this back up in case it got buried — demo link again: [LINK]\n> One quick question if you have 30 seconds: what do customers ask about most before they come in? That answer usually decides what goes on top of the page.\n\n## IF THEY REPLY \"INTERESTED\" — pricing script\n> Great! Here's how it works:\n> - One-page website with your real photos, hours, services & reviews: **$250** (or $200 for the first client — I'm building my portfolio)\n> - I handle everything: design, mobile version, Google-friendly setup. You get a link to review before anything goes live.\n> - Timeline: 5-7 days after I have your photos & approval of the layout.\n> - 50% upfront, 50% when you approve the final version.\n> Payment: PayPal or Wise, whichever is easier.\n\n## IF THEY ASK \"WHY SO CHEAP?\" (objection)\n> Fair question! I'm based in Indonesia — my costs are lower, and I'm building my US portfolio right now. Same quality as a local agency ($2,000+), just without their overhead.\n\n## RED FLAGS / RULES\n- Never claim to be local. \"I'm based in Jakarta\" is in the intro for a reason.\n- Never send more than 2 messages total (opener + 1 follow-up). Ghosting = move on.\n- If they say no thanks → \"No problem, the demo is yours to keep!\" → move on.\n- Track every send in the tracker sheet below.\n\n## TRACKER\nFile: leads_outreach_tracker.csv (columns: lead, channel, demo_sent, date_sent, followup_date, status, notes)\n", "dmdrafts": "# DM DRAFTS — siap copy-paste\n# Kirim jam 9-11 PM WIB (= pagi di Austin)\n\n## 1. Amor Nails & Spa (IG/FB DM)\n\nHi! I'm Yusril, a web designer. I came across Amor Nails & Spa — 4.9★ from 4,210 reviews is seriously impressive. I noticed there's no website, so I built a quick demo to show what it could look like:\n\nhttps://ehyunn.github.io/amor-nails-landing/\n\nIt's just a proposal (photos are placeholders), nothing published. If you like the direction, I'd love to tailor it with your input — or it's yours to keep either way!\n\n---\n\n## 2. North Lamar Veterinary Clinic (FB DM — ResearchBlvdPet page)\n\nHi! I'm Yusril, a web designer. I found North Lamar Veterinary Clinic while researching Austin vet clinics — caring for pets since 1971 with a 4.9★ rating really stood out. I noticed there's no website, so I built a demo concept:\n\nhttps://ehyunn.github.io/northlamar-vet-landing/\n\nNothing published — just a design proposal (placeholder photos). Happy to tailor it with your input if you're interested, or it's yours to keep either way!\n\n---\n\n## 3. Bob's Barber Shop (FB DM)\n\nHey! I'm Yusril, a web designer. Bob's kept coming up as one of North Austin's classic shops (\"old fashion barber shop, great conversations\" — exactly my kind of place), so I built a quick demo:\n\nhttps://ehyunn.github.io/bobs-barber-landing/\n\nJust a concept — placeholder photos & prices, nothing live. If it's useful, I'd love to make it real with your input. No pressure either way!\n\n---\n\n## 4. Hooky nails (IG DM)\n\nHi! I'm Yusril, a web designer. Hooky's work keeps getting recommended, and with reviews like yours it's surprising there's no website. I built a demo concept for a nail salon (different shop, same idea):\n\nhttps://ehyunn.github.io/amor-nails-landing/\n\nIt's just a proposal — nothing published. If you'd like one for Hooky, I'd build it around your actual work and adjust everything with you. No pressure!\n\n---\n\n## 5. Century Automotive (FB/IG DM)\n\nHi! I'm Yusril, a web designer. Shops with 4.9★ ratings like Century Automotive usually get found through Google — but there's no website telling that story. I'm building demo concepts for Austin shops right now and would love to make one for you.\n\nJust a proposal, nothing published, and you'd approve everything before it goes live. Interested in seeing a concept?\n\n---\n\n## 6. Balcones Animal Hospital (FB DM — ResearchBlvdPet)\n\nHi! I'm Yusril, a web designer. Balcones Animal Hospital's 4.7★ across 488 reviews stood out while I was researching Austin vets. I built a demo concept for a vet clinic (different clinic, same idea):\n\nhttps://ehyunn.github.io/northlamar-vet-landing/\n\nJust a proposal — nothing published. If you'd like one for Balcones, I'd build it around your team and services, with your approval at every step. No pressure!\n\n---\n\n", "readme": "# Leads Autopilot — Setup Guide\n\nSistem scrape leads gratis (OpenStreetMap) + workflow n8n autopilot.\nBiaya: $0 (opsional n8n Cloud $24/bln kalau nggak mau self-host).\n\n## Isi folder\n- `scrape_leads.py` — scraper standalone (tes manual / bisa di-cron langsung)\n- `n8n_workflow.json` — workflow n8n siap import\n- `leads_final.csv` — contoh output asli (Singapore, cafe)\n\n## Cara Pakai A: Scraper standalone (paling cepat, jalan hari ini)\n\n```bash\npython3 scrape_leads.py --city \"Bandung\" --categories dentist,gym --limit 100 -o leads.csv\n# format JSON buat diproses n8n/Zapier:\npython3 scrape_leads.py --city \"Yogyakarta\" --categories cafe --format json\n```\n\n- Kategori tersedia: dentist, clinic, veterinary, pharmacy, restaurant, cafe, bar,\n  fast_food, hotel, gym, beauty, hairdresser, spa, car_wash, laundry, bakery,\n  lawyer, architect, estate_agent, tailor, furniture, electronics\n- Lead di-sort skor tertinggi dulu: tanpa website = HOT (skor 90, offer: bikin website),\n  punya website = 60 (offer: revamp / explainer video).\n- Batasi `--limit` wajar (50-200/run) — hormati server gratis.\n- Overpass kadang sibuk (504/timeout) — skrip sudah auto-retry 4x dengan backoff.\n\nUntuk autopilot tanpa n8n: `crontab -e` →\n```\n0 7 * * * cd /root/leads-autopilot && python3 scrape_leads.py --city \"Bandung\" --categories dentist,gym --limit 100 -o leads_$(date +\\%u).csv\n```\n\n## Cara Pakai B: Workflow n8n (autopilot penuh)\n\n1. **Self-host n8n** di VPS $5/bln (Docker: `docker run -p 5678:5678 -v n8n_data:/home/node/.n8n n8nio/n8n`)\n   atau pakai n8n Cloud.\n2. Import: n8n → Workflows → Import from File → pilih `n8n_workflow.json`.\n3. Siapkan Google Sheet: bikin spreadsheet, sheet pertama rename `Leads`,\n   header row: `name, category, address, city, phone, email, website, instagram, facebook, maps_link, score, suggested_offer, fetched_at`\n4. Di node **Save to Google Sheets**: ganti `GANTI_DENGAN_ID_SPREADSHEET`\n   (ID ada di URL spreadsheet) + connect akun Google kamu.\n5. Di node **Config**: set `city`, `categories`, `limit`.\n6. Activate. Workflow jalan tiap hari jam 07:00 (ubah di node Daily 7AM Trigger).\n   Dedupe handled: kalau sheet punya kolom `name`, node Sheets pakai appendOrUpdate.\n\n## Next step: dari leads → closed deal\n1. Kolom `phone` / `instagram` / `maps_link` = channel outreach.\n2. WhatsApp/IG DM pertama: personal, sebut nama bisnis + masalah spesifik\n   (\"websitenya gak kebuka di HP\" / \"gak ada websitenya, cuma IG\").\n3. Offer: website/landing page (jual $300-800, fulfill via Fiverr $50-150)\n   → upsell explainer video + logo.\n4. Jangan mass-email spam tanpa domain warm-up — pakai WhatsApp/IG dulu,\n   volume kecil, pesan personal. Jauh lebih aman & konversi lebih tinggi.\n\n## Catatan data\n- Sumber OSM gratis tapi cakupan tidak selengkap Google Maps. Indonesia cukup\n  bagus di kota besar. Kalau butuh data lebih tebal (email terverifikasi, review\n  count), upgrade ke scraper berbayar nanti (Apify ~$49/bln atau GMapsScraper $19/bln).\n- ODM data under ODbL — bebas dipakai komersial.\n", "demos": [{"name": "Dentist", "biz": "High Point Dentistry (skipped: has website — portfolio only)", "url": "https://ehyunn.github.io/highpoint-dentistry-landing/", "layout": "Editorial serif, warm parchment", "audit": "9/9/8/8.5/10"}, {"name": "Nail salon", "biz": "Amor Nails & Spa (Tier A #1)", "url": "https://ehyunn.github.io/amor-nails-landing/", "layout": "Full-bleed pink luxury + collage", "audit": "9/8/8.5/8.5/10"}, {"name": "Veterinary", "biz": "North Lamar Vet Clinic (Tier A #2)", "url": "https://ehyunn.github.io/northlamar-vet-landing/", "layout": "Teal warm-clinical + life-path", "audit": "9.5/9/9/9/10"}, {"name": "Barbershop", "biz": "Bob's Barber Shop (Tier A)", "url": "https://ehyunn.github.io/bobs-barber-landing/", "layout": "Dark charcoal + price menu", "audit": "9.5/8.5/9/9/10"}], "scrapeCmd": "cd /root/gmaps-test && docker run --rm -v \"$PWD/queries.txt:/queries.txt:ro\" -v \"$PWD/out:/out\" gosom/google-maps-scraper -input /queries.txt -results /out/results.csv -depth 10 -lang en -c 4 -email -exit-on-inactivity 5m", "verifyCmd": "python3 /root/leads-autopilot/scrape_leads.py --city \"CITY\" --categories CAT1,CAT2 --limit 100 -o out.csv"};
+
+/* ---------- state ---------- */
+let state = JSON.parse(localStorage.getItem('workos')||'null') || {
+  tracker: DATA.tracker.map(r=>({...r})),
+  checks: {}
+};
+function save(){ localStorage.setItem('workos', JSON.stringify(state)); }
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById('v-'+t.dataset.v).classList.add('active');
+});
+
+/* ---------- stats ---------- */
+function stats(){
+  const s = state.tracker;
+  document.getElementById('st-total').textContent = s.length;
+  document.getElementById('st-sent').textContent = s.filter(r=>['sent','followed','replied','interested'].includes(r.status)).length;
+  document.getElementById('st-replied').textContent = s.filter(r=>['replied','interested'].includes(r.status)).length;
+  document.getElementById('st-interested').textContent = s.filter(r=>r.status==='interested').length;
+}
+
+/* ---------- tracker ---------- */
+const STATUSES = ['not sent','sent','followed','replied','interested','declined'];
+function renderTracker(){
+  const tb = document.getElementById('tbody');
+  tb.innerHTML = '';
+  state.tracker.forEach((r,i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${r.priority}</td>
+      <td><b>${r.lead}</b><br><span class="muted mono">${r.phone}</span></td>
+      <td class="muted">${r.rating_reviews}</td>
+      <td class="muted" style="font-size:.76rem">${r.channel}</td>
+      <td><span class="demosend">${r.demo_to_send}</span></td>
+      <td><select data-i="${i}">
+        ${STATUSES.map(s=>`<option ${r.status===s?'selected':''} class="status-${s.replace(' ','')}">${s}</option>`).join('')}
+      </select></td>
+      <td><input type="date" data-i="${i}" data-f="date_sent" value="${r.date_sent||''}"></td>
+      <td><input type="date" data-i="${i}" data-f="followup_date" value="${r.followup_date||''}"></td>
+      <td><input type="text" data-i="${i}" data-f="notes" value="${(r.notes||'').replace(/"/g,'&quot;')}" style="width:130px;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:.78rem"></td>`;
+    tb.appendChild(tr);
+  });
+  tb.querySelectorAll('select').forEach(sel=>sel.onchange=()=>{
+    state.tracker[sel.dataset.i].status = sel.value; save(); stats(); renderTracker();
+  });
+  tb.querySelectorAll('input[data-f]').forEach(inp=>inp.onchange=()=>{
+    state.tracker[inp.dataset.i][inp.dataset.f] = inp.value; save();
+  });
+}
+function exportCSV(){
+  const rows = [['priority','lead','phone','rating_reviews','channel','demo_to_send','date_sent','followup_date','status','notes'],
+    ...state.tracker.map(r=>[r.priority,r.lead,r.phone,r.rating_reviews,r.channel,r.demo_to_send,r.date_sent,r.followup_date,r.status,r.notes])];
+  const blob = new Blob([rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n')],{type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'outreach_tracker_export.csv'; a.click();
+  document.getElementById('export-note').textContent = ' ✓ terunduh';
+}
+
+/* ---------- checklists ---------- */
+const CHECKS = {
+  daily: [
+    'Buka tracker → cek lead yang jatuh tempo follow-up hari ini',
+    'Kirim DM ke 2-4 lead baru (draft ada di tab Draft DM) — jam 9-11 malam WIB',
+    'Catat di tracker: status "sent" + tanggal kirim',
+    'Cek balasan masuk (IG/FB) → kalau ada, pakai shortcut skenario di bawah',
+    'Update notes di tracker kalau ada perkembangan',
+  ],
+  weekly: [
+    'Follow-up semua lead "sent" yang udah lewat 4-5 hari (pakai template follow-up)',
+    'Review funnel: berapa kirim → balas → interested? Kalau <10% balas, minta Hermes revisi draft',
+    'Minta Hermes scrape 1 kota/kategori baru kalau pipeline Tier A tinggal <6',
+    'Minta Hermes bikin demo kategori baru kalau mau pitch kategori yang belum ada demonya',
+  ],
+  close: [
+    'Sepakati harga ($250, atau $200 client pertama — sebut sebagai portfolio price)',
+    'Minta 50% DP via PayPal/Wise',
+    'Minta foto asli + info yang mau ditampilkan (jam buka, harga, services)',
+    'Bilang Hermes: "bikin landing page buat [bisnis]" + kasih foto & info → review hasil',
+    'Deploy final → klien approve → terima 50% sisanya',
+    'Minta testimoni 2-3 kalimat buat portfolio',
+  ]
+};
+function renderChecks(){
+  [['daily','daily-chk'],['weekly','weekly-chk'],['close','close-chk']].forEach(([k,id])=>{
+    const el = document.getElementById(id);
+    el.innerHTML = '';
+    CHECKS[k].forEach((c,i)=>{
+      const key = k+i;
+      const div = document.createElement('label');
+      div.className = 'chk' + (state.checks[key]?' done':'');
+      div.innerHTML = `<input type="checkbox" ${state.checks[key]?'checked':''}><span>${c}</span>`;
+      div.querySelector('input').onchange = e => {
+        state.checks[key] = e.target.checked; save();
+        div.classList.toggle('done', e.target.checked);
+        if(k!=='daily' && e.target.checked) setTimeout(()=>{div.querySelector('input').checked=false; state.checks[key]=false; save(); div.classList.remove('done');}, 1500);
+      };
+      el.appendChild(div);
+    });
+  });
+}
+
+/* ---------- replies shortcut ---------- */
+const REPLIES = [
+ ['Tertarik / "how much?"', `Great! Here's how it works:\n- One-page website with your real photos, hours, services & reviews: $250 (or $200 for the first client — I'm building my portfolio)\n- I handle everything: design, mobile version, Google-friendly setup. You get a link to review before anything goes live.\n- Timeline: 5-7 days after I have your photos & approval of the layout.\n- 50% upfront, 50% when you approve the final version.\nPayment: PayPal or Wise, whichever is easier.`],
+ ['"Why so cheap?"', `Fair question! I'm based in Indonesia — my costs are lower, and I'm building my US portfolio right now. Same quality as a local agency ($2,000+), just without their overhead.`],
+ ['"Can you do [extra thing]?"', `Probably yes! Send me the details and I'll confirm scope + price before we start — no surprises. Anything outside the one-page scope I'll quote separately and honestly.`],
+ ['"No thanks"', `No problem at all — the demo is yours to keep! If you ever change your mind, my door is open. Good luck with the shop!`],
+ ['Ghosted 5+ hari (follow-up)', `Just floating this back up in case it got buried — demo link again: [LINK]\nOne quick question if you have 30 seconds: what do customers ask about most before they come in? That answer usually decides what goes on top of the page.`],
+];
+function renderReplies(){
+  const el = document.getElementById('replies');
+  el.innerHTML = '';
+  REPLIES.forEach(([t,body],i)=>{
+    const d = document.createElement('div');
+    d.style.cssText='margin-bottom:10px';
+    d.innerHTML = `<button class="copybtn" style="width:100%;text-align:left;padding:10px 14px;font-size:.84rem;color:var(--ink);border-radius:8px">${t}</button><div class="dmcard hidden mono">${body}</div>`;
+    d.querySelector('button').onclick=()=>d.querySelector('.dmcard').classList.toggle('hidden');
+    d.querySelector('.dmcard').onclick=()=>{navigator.clipboard.writeText(body); d.querySelector('.dmcard').style.borderColor='var(--green)'; setTimeout(()=>d.querySelector('.dmcard').style.borderColor='',800);};
+    el.appendChild(d);
+  });
+}
+
+/* ---------- DM drafts ---------- */
+function renderDM(){
+  const el = document.getElementById('dm-list');
+  el.innerHTML='';
+  const blocks = DATA.dmdrafts.split(/^## /m).filter(b=>b.trim());
+  blocks.forEach(b=>{
+    const [head,...rest] = b.split('\n');
+    const body = rest.join('\n').replace(/^---$/gm,'').trim();
+    const d = document.createElement('div');
+    d.innerHTML = `<div class="dmhead"><b>${head.replace(/\(.*$/,'').trim()}</b><button class="copybtn">Copy</button></div><div class="dmcard">${body}</div>`;
+    d.querySelector('.copybtn').onclick=e=>{
+      navigator.clipboard.writeText(body); e.target.textContent='✓ Copied!';
+      setTimeout(()=>e.target.textContent='Copy',900);
+    };
+    el.appendChild(d);
+  });
+}
+
+/* ---------- demos ---------- */
+function renderDemos(){
+  const el = document.getElementById('demo-list');
+  el.innerHTML='';
+  DATA.demos.forEach(d=>{
+    const div=document.createElement('div');
+    div.className='demo-card';
+    div.innerHTML=`<div class="demo-cat">${d.name}</div>
+      <div class="demo-biz">${d.biz}<br><span style="color:var(--acc)">${d.url}</span><br>Layout: ${d.layout}</div>
+      <span class="badge live">● LIVE</span>
+      <a class="btn" style="background:var(--panel);border:1px solid var(--line);color:var(--acc);padding:8px 16px;border-radius:8px;font-size:.82rem" href="${d.url}" target="_blank" rel="noopener">Buka</a>`;
+    el.appendChild(div);
+  });
+}
+
+/* ---------- tier B ---------- */
+function renderTierB(){
+  const tb=document.getElementById('tierb-body');
+  tb.innerHTML = DATA.tierB.map(r=>`<tr><td><b>${r.title}</b></td><td class="muted">${r.category}</td><td class="mono">${r.phone||'-'}</td><td class="muted">${r.review_rating}★ (${r.review_count})</td></tr>`).join('');
+}
+
+/* ---------- playbook ---------- */
+function renderPB(){
+  const el = document.getElementById('pb-body');
+  let html = DATA.playbook
+    .replace(/^# .*/m,'')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .split('\n').map(l=>{
+      if(l.startsWith('## ')) return `<h3>${l.slice(3)}</h3>`;
+      if(l.startsWith('> ')) return `<div class="dmcard">${l.slice(2)}</div>`;
+      if(l.startsWith('- ')) return `<p style="padding-left:14px">• ${l.slice(2)}</p>`;
+      if(l.trim()==='') return '';
+      return `<p>${l}</p>`;
+    }).join('');
+  el.innerHTML = html;
+}
+
+/* ---------- copy ---------- */
+function cp(id){ navigator.clipboard.writeText(document.getElementById(id).textContent); }
+
+/* ---------- init ---------- */
+document.getElementById('cmd-scrape').textContent = DATA.scrapeCmd;
+document.getElementById('cmd-osm').textContent = DATA.verifyCmd;
+renderTracker(); stats(); renderChecks(); renderReplies(); renderDM(); renderDemos(); renderTierB(); renderPB();
+</script>
+</body>
+</html>
