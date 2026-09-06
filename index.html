@@ -25,6 +25,19 @@ header{position:sticky;top:0;z-index:20;background:rgba(15,17,21,.95);backdrop-f
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:7px 14px;font-size:.8rem;color:var(--dim)}
 .stat b{color:var(--ink);font-size:1rem;display:block;line-height:1.2}
 .tabs{max-width:1280px;margin:0 auto;padding:10px 22px 0;display:flex;gap:6px;flex-wrap:wrap}
+/* MOBILE: compact header — no sticky, stats inline, tabs scrollable */
+@media(max-width:820px){
+  header{position:static;backdrop-filter:none}
+  .h-in{padding:10px 16px;gap:10px}
+  .logo{font-size:.95rem}
+  .stats{gap:8px;overflow-x:auto;width:100%;margin-left:0;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+  .stat{padding:5px 10px;font-size:.7rem;white-space:nowrap}
+  .stat b{font-size:.85rem;display:inline;margin-right:4px}
+  .tabs{padding:8px 10px 0;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{white-space:nowrap;padding:7px 13px;font-size:.8rem}
+  main{padding:16px}
+}
 .tab{background:none;border:1px solid transparent;color:var(--dim);padding:8px 16px;border-radius:8px;font-size:.88rem;font-weight:500}
 .tab:hover{color:var(--ink)}
 .tab.active{background:var(--panel2);border-color:var(--line);color:var(--ink)}
@@ -110,6 +123,8 @@ pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padd
     <button class="tab" data-v="tools">🛠 Tools & SOP</button>
     <button class="tab" data-v="playbook">📕 Playbook</button>
     <button class="tab" data-v="tierb">📦 Tier B (nanti)</button>
+    <button class="tab" data-v="projects">🗂 Projects lain</button>
+    <button class="tab" data-v="sync">🔄 Sync</button>
   </div>
 </header>
 
@@ -164,7 +179,7 @@ pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padd
 
 <!-- ================= DM ================= -->
 <section class="view" id="v-dms">
-  <div class="callout">Draft personal per-lead. <strong>Ganti nggak ada yang perlu diganti</strong> — semuanya udah final. Tinggal copy → paste di IG/FB. Yang belum ada demonya (Century) → tawarkan bikin konsep dulu.</div>
+  <div class="callout">Draft personal per-lead — tinggal copy → paste di IG/FB. <strong>Saran kontak:</strong> tambahin 1 baris signature di akhir DM mis. <code>— Yusril · WA +62-xxx (fast reply)</code> begitu kamu aktifin nomor WA bisnis. Jangan pakai WA pribadi harian. Email juga bisa: <code>yusril@[domain].com</code> nanti kalau udah beli domain. Untuk sekarang, DM reply cukup — signature bisa menyusul.</div>
   <div id="dm-list"></div>
 </section>
 
@@ -243,6 +258,34 @@ pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padd
     </table>
   </div>
 </section>
+<section class="view" id="v-projects">
+  <div class="card">
+    <h3>🗂 Semua project aktif</h3>
+    <div style="display:grid;gap:12px;margin-top:12px">
+      <div class="demo-card"><div class="demo-cat" style="color:var(--acc)">P1</div><div class="demo-biz"><b style="color:var(--ink)">LLM Cost Tracker — Notion template $19</b><br>Gumroad listing: copy udah di-upload, tunggu approval. Promo plan: Reddit r/SideProject + r/LLMDevs + Indie Hackers + X reply-guy (skip PH/HN). <span class="warn">Status: listing pending</span></div></div>
+      <div class="demo-card"><div class="demo-cat" style="color:var(--acc)">P2</div><div class="demo-biz"><b style="color:var(--ink)">Content Rewards — clipper</b><br>Nunggu campaign assets pertama + pilih platform. Pipeline: stakes-first cold open, word-synced captions, loop ending, cull top 3. <span class="muted">Status: menunggu assets</span></div></div>
+      <div class="demo-card"><div class="demo-cat" style="color:var(--green)">P3</div><div class="demo-biz"><b style="color:var(--ink)">Landing Page Drop Servicing</b><br>← yang ini (tab-tab di atas). 14 Tier A siap DM, 4 demo live. <span class="ok">Status: outreach phase</span></div></div>
+      <div class="demo-card"><div class="demo-cat" style="color:var(--dim)">P4</div><div class="demo-biz"><b style="color:var(--ink)">Interior design day job</b><br>Site supervisor — primary income, jadwal tetap. Landing page hustle dijamah malam (9-11 PM WIB) + akhir pekan.</div></div>
+    </div>
+    <p class="muted" style="margin-top:12px">Tambah project baru? Bilang Hermes — akan ditambahin ke sini.</p>
+  </div>
+</section>
+
+<section class="view" id="v-sync">
+  <div class="card">
+    <h3>🔄 Sinkronisasi antar device</h3>
+    <p class="muted">localStorage tidak sinkron otomatis antar HP/laptop. Solusi: export file <code>workos-backup.json</code> dari device A → import di device B. 10 detik.</p>
+    <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+      <button class="btn" style="background:var(--acc);color:#fff;border:none;border-radius:8px;padding:12px 20px;font-weight:600" onclick="exportJSON()">⬇ Export data (dari device ini)</button>
+      <label class="btn" style="background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:12px 20px;font-weight:600;cursor:pointer">
+        ⬆ Import data (ke device ini) <input type="file" accept=".json" style="display:none" onchange="importJSON(this)">
+      </label>
+    </div>
+    <p class="muted" style="margin-top:12px">Alur tipikal: selesai kerja di laptop → Export → buka HP → Import. Sebaliknya juga sama. <strong>Export dulu sebelum import</strong> — import menimpa data device tujuan.</p>
+    <p class="muted" style="margin-top:8px">Alternatif tanpa ribet: kerja selalu dari 1 device, device lain cuma buat lihat.</p>
+  </div>
+</section>
+
 </main>
 
 <script>
@@ -430,6 +473,27 @@ function renderPB(){
 
 /* ---------- copy ---------- */
 function cp(id){ navigator.clipboard.writeText(document.getElementById(id).textContent); }
+function exportJSON(){
+  const blob = new Blob([JSON.stringify(state,null,1)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'workos-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+}
+function importJSON(inp){
+  const f = inp.files[0]; if(!f) return;
+  const rd = new FileReader();
+  rd.onload = e => {
+    try {
+      const d = JSON.parse(e.target.result);
+      if(!d.tracker) throw new Error('bukan backup WorkOS');
+      state = d; save();
+      renderTracker(); stats(); renderChecks();
+      alert('✓ Data ter-import! '+state.tracker.length+' leads.');
+    } catch(err){ alert('Gagal import: '+err.message); }
+  };
+  rd.readAsText(f);
+}
 
 /* ---------- init ---------- */
 document.getElementById('cmd-scrape').textContent = DATA.scrapeCmd;
