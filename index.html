@@ -377,7 +377,7 @@ function renderReplies(){
 function renderDM(){
   const el = document.getElementById('dm-list');
   el.innerHTML='';
-  const blocks = DATA.dmdrafts.split(/^## /m).filter(b=>b.trim());
+  const blocks = DATA.dmdrafts.split(/^## /m).filter(b=>b.trim()).filter(b=>!b.startsWith('# '));
   blocks.forEach(b=>{
     const [head,...rest] = b.split('\n');
     const body = rest.join('\n').replace(/^---$/gm,'').trim();
@@ -434,7 +434,7 @@ function cp(id){ navigator.clipboard.writeText(document.getElementById(id).textC
 /* ---------- init ---------- */
 document.getElementById('cmd-scrape').textContent = DATA.scrapeCmd;
 document.getElementById('cmd-osm').textContent = DATA.verifyCmd;
-renderTracker(); stats(); renderChecks(); renderReplies(); renderDM(); renderDemos(); renderTierB(); renderPB();
+save(); renderTracker(); stats(); renderChecks(); renderReplies(); renderDM(); renderDemos(); renderTierB(); renderPB();
 </script>
 </body>
 </html>
