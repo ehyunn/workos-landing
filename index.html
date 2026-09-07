@@ -189,7 +189,20 @@ pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padd
 
 <!-- ================= DM ================= -->
 <section class="view" id="v-dms">
-  <div class="callout">Draft personal per-lead — tinggal copy → paste di IG/FB. <strong>Saran kontak:</strong> tambahin 1 baris signature di akhir DM mis. <code>— Yusril · WA +62-xxx (fast reply)</code> begitu kamu aktifin nomor WA bisnis. Jangan pakai WA pribadi harian. Email juga bisa: <code>yusril@[domain].com</code> nanti kalau udah beli domain. Untuk sekarang, DM reply cukup — signature bisa menyusul.</div>
+  <div class="card" style="margin-bottom:16px">
+  <h3>📇 Kontak kamu (isi sekali — otomatis nempel di setiap draft)</h3>
+  <p class="muted" style="margin-bottom:12px">Isi yang mau dipakai. Signature ditambahkan otomatis di akhir tiap DM pas tombol Copy ditekan. Saran: minimal 1 channel. <strong>Jangan pakai WA pribadi harian</strong> — bikin WA bisnis.</p>
+  <div style="display:grid;gap:10px;max-width:560px">
+    <label style="display:flex;align-items:center;gap:10px;font-size:.85rem"><input type="checkbox" id="ct-wa-on"><svg class="icon" style="color:var(--green)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> WhatsApp bisnis</label>
+    <input id="ct-wa" placeholder="62xxxxxxxxxx (format internasional tanpa +)" class="ct-in" style="background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:.88rem">
+    <label style="display:flex;align-items:center;gap:10px;font-size:.85rem"><input type="checkbox" id="ct-em-on"><svg class="icon" style="color:var(--acc)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Email</label>
+    <input id="ct-em" placeholder="yusril@domain.com" class="ct-in" style="background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:.88rem">
+    <label style="display:flex;align-items:center;gap:10px;font-size:.85rem"><input type="checkbox" id="ct-ig-on"><svg class="icon" style="color:#E1306C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg> Instagram</label>
+    <input id="ct-ig" placeholder="username instagram (mis. yusril.builds)" class="ct-in" style="background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:.88rem">
+  </div>
+  <p class="muted" style="margin-top:10px">Tersimpan otomatis. Format link: <code>wa.me/62xxx</code> · <code>mailto:</code> · <code>instagram.com/username</code>.</p>
+</div>
+<div class="callout">Draft personal per-lead — tinggal copy → paste di IG/FB. Signature kontak otomatis nambah di akhir kalau kamu isi di atas.</div>
   <div id="dm-list"></div>
 </section>
 
@@ -426,7 +439,39 @@ function renderReplies(){
   });
 }
 
+/* ---------- contacts ---------- */
+function bindContacts(){
+  ['ct-wa-on','ct-em-on','ct-ig-on'].forEach(id=>{
+    document.getElementById(id).onchange = saveContacts;
+  });
+  ['ct-wa','ct-em','ct-ig'].forEach(id=>{
+    document.getElementById(id).oninput = saveContacts;
+  });
+}
+
 /* ---------- DM drafts ---------- */
+function contactSig(){
+  const on = id => document.getElementById(id).checked;
+  const val = id => document.getElementById(id).value.trim();
+  const parts = [];
+  if(on('ct-wa-on') && val('ct-wa')) parts.push('WhatsApp: https://wa.me/'+val('ct-wa').replace(/[^0-9]/g,''));
+  if(on('ct-em-on') && val('ct-em')) parts.push('Email: '+val('ct-em'));
+  if(on('ct-ig-on') && val('ct-ig')) parts.push('IG: https://instagram.com/'+val('ct-ig').replace('@',''));
+  return parts.length ? '\n\n— Yusril\n'+parts.join(' · ') : '\n\n— Yusril';
+}
+function saveContacts(){
+  state.contacts = {wa:{on:document.getElementById('ct-wa-on').checked,v:document.getElementById('ct-wa').value},
+    em:{on:document.getElementById('ct-em-on').checked,v:document.getElementById('ct-em').value},
+    ig:{on:document.getElementById('ct-ig-on').checked,v:document.getElementById('ct-ig').value}};
+  save();
+}
+function loadContacts(){
+  if(!state.contacts) return;
+  const c = state.contacts;
+  if(c.wa){document.getElementById('ct-wa-on').checked=c.wa.on; document.getElementById('ct-wa').value=c.wa.v||'';}
+  if(c.em){document.getElementById('ct-em-on').checked=c.em.on; document.getElementById('ct-em').value=c.em.v||'';}
+  if(c.ig){document.getElementById('ct-ig-on').checked=c.ig.on; document.getElementById('ct-ig').value=c.ig.v||'';}
+}
 function renderDM(){
   const el = document.getElementById('dm-list');
   el.innerHTML='';
@@ -437,7 +482,7 @@ function renderDM(){
     const d = document.createElement('div');
     d.innerHTML = `<div class="dmhead"><b>${head.replace(/\(.*$/,'').trim()}</b><button class="copybtn">Copy</button></div><div class="dmcard">${body}</div>`;
     d.querySelector('.copybtn').onclick=e=>{
-      navigator.clipboard.writeText(body); e.target.textContent='✓ Tersalin!';
+      navigator.clipboard.writeText(body + contactSig()); e.target.textContent='✓ Tersalin!';
       setTimeout(()=>e.target.textContent='Copy',900);
     };
     el.appendChild(d);
@@ -508,7 +553,7 @@ function importJSON(inp){
 /* ---------- init ---------- */
 document.getElementById('cmd-scrape').textContent = DATA.scrapeCmd;
 document.getElementById('cmd-osm').textContent = DATA.verifyCmd;
-save(); renderTracker(); stats(); renderChecks(); renderReplies(); renderDM(); renderDemos(); renderTierB(); renderPB();
+save(); renderTracker(); stats(); renderChecks(); renderReplies(); renderDM(); renderDemos(); renderTierB(); renderPB(); bindContacts(); loadContacts();
 </script>
 </body>
 </html>
