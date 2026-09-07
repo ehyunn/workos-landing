@@ -48,7 +48,8 @@ header{position:sticky;top:0;z-index:20;background:rgba(15,17,21,.95);backdrop-f
   .tbl td::before{content:attr(data-label);color:var(--dim);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em}
   .tbl td input[type=text]{width:160px!important}
 }
-.tab{background:none;border:1px solid transparent;color:var(--dim);padding:8px 16px;border-radius:8px;font-size:.88rem;font-weight:500}
+.tab{background:none;border:1px solid transparent;color:var(--dim);padding:8px 14px;border-radius:8px;font-size:.88rem;font-weight:500;display:inline-flex;align-items:center;gap:7px}
+.tab .icon{width:15px;height:15px}
 .tab:hover{color:var(--ink)}
 .tab.active{background:var(--panel2);border-color:var(--line);color:var(--ink)}
 main{max-width:1280px;margin:0 auto;padding:22px}
@@ -130,15 +131,161 @@ pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padd
     </div>
   </div>
   <div class="tabs">
-    <button class="tab active" data-v="daily">📋 Hari ini</button>
-    <button class="tab" data-v="outreach">📬 Outreach</button>
-    <button class="tab" data-v="dms">💬 Draft DM</button>
-    <button class="tab" data-v="demos">🎨 Demo & Layout</button>
-    <button class="tab" data-v="tools">🛠 Tools & SOP</button>
-    <button class="tab" data-v="playbook">📕 Playbook</button>
-    <button class="tab" data-v="tierb">📦 Tier B (nanti)</button>
-    <button class="tab" data-v="projects">🗂 Projects lain</button>
-    <button class="tab" data-v="sync">🔄 Sync</button>
+    <button class="tab active" data-v="daily"><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+  <path d="M12 11h4" />
+  <path d="M12 16h4" />
+  <path d="M8 11h.01" />
+  <path d="M8 16h.01" />
+</svg>
+ Hari ini</button>
+    <button class="tab" data-v="outreach"><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" />
+  <path d="m21.854 2.147-10.94 10.939" />
+</svg>
+ Outreach</button>
+    <button class="tab" data-v="dms"><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" />
+</svg>
+ Draft DM</button>
+    <button class="tab" data-v="demos"><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" />
+  <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+  <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+  <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+  <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+</svg>
+ Demo & Layout</button>
+    <button class="tab" data-v="tools"><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z" />
+</svg>
+ Tools & SOP</button>
+    <button class="tab" data-v="playbook"><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 5v16" />
+  <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" />
+</svg>
+ Playbook</button>
+    <button class="tab" data-v="tierb"><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
+  <path d="M12 22V12" />
+  <polyline points="3.29 7 12 12 20.71 7" />
+  <path d="m7.5 4.27 9 5.15" />
+</svg>
+ Tier B (nanti)</button>
+    <button class="tab" data-v="projects"><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+  <path d="M8 10v4" />
+  <path d="M12 10v2" />
+  <path d="M16 10v6" />
+</svg>
+ Projects lain</button>
+    <button class="tab" data-v="sync"><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+  <path d="M21 3v5h-5" />
+  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+  <path d="M8 16H3v5" />
+</svg>
+ Sync</button>
   </div>
 </header>
 
@@ -156,19 +303,78 @@ pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padd
 
   <div class="grid2">
     <div class="card">
-      <h3>✅ Rutin harian (30-60 mnt)</h3>
+      <h3><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21.801 10A10 10 0 1 1 17 3.335" />
+  <path d="m9 11 3 3L22 4" />
+</svg>
+ Rutin harian (30-60 mnt)</h3>
       <div id="daily-chk"></div>
     </div>
     <div class="card">
-      <h3>📅 Rutin mingguan</h3>
+      <h3><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 6v6l4 2" />
+</svg>
+ Rutin mingguan</h3>
       <div id="weekly-chk"></div>
-      <h3 style="margin-top:20px">🎯 Saat ada yang interested</h3>
+      <h3 style="margin-top:20px"><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+  <path d="m16 9-5.5 5.5L8 12" />
+</svg>
+ Saat ada yang interested</h3>
       <div id="close-chk"></div>
     </div>
   </div>
 
   <div class="card" style="margin-top:16px">
-    <h3>⚡ Shortcut skenario balasan</h3>
+    <h3><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z" />
+</svg>
+ Shortcut skenario balasan</h3>
     <p class="muted" style="margin-bottom:10px">Klik skenario, salin jawabannya (ganti [bracket] dulu):</p>
     <div id="replies"></div>
   </div>
@@ -188,13 +394,28 @@ pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padd
       <tbody id="tbody"></tbody>
     </table>
   </div>
-  <p class="muted" style="margin-top:10px">Export ulang CSV: <button class="copybtn" onclick="exportCSV()">⬇ Unduh CSV</button> <span id="export-note"></span></p>
+  <p class="muted" style="margin-top:10px">Export ulang CSV: <button class="copybtn" onclick="exportCSV()">Unduh CSV</button> <span id="export-note"></span></p>
 </section>
 
 <!-- ================= DM ================= -->
 <section class="view" id="v-dms">
   <div class="card" style="margin-bottom:16px">
-  <h3>📇 Kontak kamu (isi sekali — otomatis nempel di setiap draft)</h3>
+  <h3><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="4" />
+  <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" />
+</svg>
+ Kontak kamu (isi sekali — otomatis nempel di setiap draft)</h3>
   <p class="muted" style="margin-bottom:12px">Isi yang mau dipakai. Signature ditambahkan otomatis di akhir tiap DM pas tombol Copy ditekan. Saran: minimal 1 channel. <strong>Jangan pakai WA pribadi harian</strong> — bikin WA bisnis.</p>
   <div style="display:grid;gap:10px;max-width:560px">
     <label style="display:flex;align-items:center;gap:10px;font-size:.85rem"><input type="checkbox" id="ct-wa-on"><svg class="icon" style="color:var(--green)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> WhatsApp bisnis</label>
@@ -215,7 +436,22 @@ pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padd
   <div class="callout">Prinsip: <strong>research bisnis → rationale → kamu approve → build → audit AI → verifikasi visual → deploy.</strong> Tiap kategori punya layout sendiri, bukan re-skin.</div>
   <div id="demo-list"></div>
   <div class="card" style="margin-top:16px">
-    <h3>📸 Sumber foto gratis (verifikasi dulu via vision!)</h3>
+    <h3><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z" />
+  <circle cx="12" cy="13" r="3" />
+</svg>
+ Sumber foto gratis (verifikasi dulu via vision!)</h3>
     <p class="muted">Pexels: <code>images.pexels.com/photos/{id}/pexels-photo-{id}.jpeg?auto=compress&cs=tinysrgb&w=1200</code> · Openverse API (CC0/PDM): <code>api.openverse.org/v1/images/?q=QUERY&license=cc0,pdm</code> · Hati-hati: banyak hasil Flicker itu foto amatir/iklan — WAJIB dicek visual & watermark sebelum dipakai.</p>
   </div>
 </section>
@@ -224,19 +460,69 @@ pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padd
 <section class="view" id="v-tools">
   <div class="grid2">
     <div class="card">
-      <h3>🗺 Scrape Google Maps (gratis, Docker)</h3>
+      <h3><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z" />
+  <path d="M15 5.764v15" />
+  <path d="M9 3.236v15" />
+</svg>
+ Scrape Google Maps (gratis, Docker)</h3>
       <pre id="cmd-scrape"></pre>
       <button class="copybtn" onclick="cp('cmd-scrape')">Salin</button>
       <p class="muted" style="margin-top:8px">queries.txt = 1 query per baris (mis. <code>barbershop in Dallas TX</code>). Depth 10 + 8 kategori ≈ 30-45 mnt, hasil ~600 leads. <strong>Wajib verifikasi manual</strong> — rasio no-website asli cuma ~4-7%.</p>
     </div>
     <div class="card">
-      <h3>🗺 Scrape OSM (backup, gratis)</h3>
+      <h3><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+  <circle cx="12" cy="10" r="3" />
+</svg>
+ Scrape OSM (backup, gratis)</h3>
       <pre id="cmd-osm"></pre>
       <button class="copybtn" onclick="cp('cmd-osm')">Salin</button>
       <p class="muted" style="margin-top:8px">Data kasar — banyak false positive "no website". Hanya buat discovery, jangan pernah pitch tanpa verifikasi web search.</p>
     </div>
     <div class="card">
-      <h3>🤖 Audit pipeline (tiap demo SEBELUM deploy)</h3>
+      <h3><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 8V4H8" />
+  <rect width="16" height="12" x="4" y="8" rx="2" />
+  <path d="M2 14h2" />
+  <path d="M20 14h2" />
+  <path d="M15 13v2" />
+  <path d="M9 13v2" />
+</svg>
+ Audit pipeline (tiap demo SEBELUM deploy)</h3>
       <ol style="color:var(--dim);font-size:.88rem;padding-left:18px;display:grid;gap:6px">
         <li>Riset bisnis via web_search (sejarah, review themes, kompetitor, keluhan)</li>
         <li>Tulis rationale 5-6 baris → <strong>tampilkan ke user dulu</strong></li>
@@ -248,18 +534,51 @@ pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padd
       </ol>
     </div>
     <div class="card">
-      <h3>🚀 Deploy GitHub Pages (akun ehyunn)</h3>
+      <h3><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+  <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+  <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+  <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
+</svg>
+ Deploy GitHub Pages (akun ehyunn)</h3>
       <ol style="color:var(--dim);font-size:.88rem;padding-left:18px;display:grid;gap:6px">
         <li>POST /user/repos (PAT: Administration R/W)</li>
         <li>git init -b main → commit → push (PAT: Contents R/W)</li>
         <li>POST /repos/{o}/{r}/pages {"source":{"branch":"main","path":"/"}}</li>
         <li>Live dalam 60-90 detik di <code>https://ehyunn.github.io/{repo}/</code></li>
-        <li>⚠️ PAT jangan pernah masuk file/repo — revoke setelah pakai</li>
+        <li>PAT jangan pernah masuk file/repo — revoke setelah pakai</li>
       </ol>
     </div>
   </div>
   <div class="card" style="margin-top:16px">
-    <h3>💰 Ekonomi per project</h3>
+    <h3><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="20" height="12" x="2" y="6" rx="2" />
+  <circle cx="12" cy="12" r="2" />
+  <path d="M6 12h.01M18 12h.01" />
+</svg>
+ Ekonomi per project</h3>
     <div class="tbl" style="font-size:.85rem">
       <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--line)"><span>Harga jual landing page</span><b style="color:var(--green)">$250</b></div>
       <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--line)"><span>Token build + audit + foto</span><b>-$0.10</b></div>
@@ -287,7 +606,24 @@ pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padd
 </section>
 <section class="view" id="v-projects">
   <div class="card">
-    <h3>🗂 Semua project aktif</h3>
+    <h3><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+  <path d="M8 10v4" />
+  <path d="M12 10v2" />
+  <path d="M16 10v6" />
+</svg>
+ Semua project aktif</h3>
     <div style="display:grid;gap:12px;margin-top:12px">
       <div class="demo-card"><div class="demo-cat" style="color:var(--acc)">P1</div><div class="demo-biz"><b style="color:var(--ink)">LLM Cost Tracker — Notion template $19</b><br>Gumroad listing: copy udah di-upload, tunggu approval. Promo plan: Reddit r/SideProject + r/LLMDevs + Indie Hackers + X reply-guy (skip PH/HN). <span class="warn">Status: listing pending</span></div></div>
       <div class="demo-card"><div class="demo-cat" style="color:var(--acc)">P2</div><div class="demo-biz"><b style="color:var(--ink)">Content Rewards — clipper</b><br>Nunggu campaign assets pertama + pilih platform. Pipeline: stakes-first cold open, word-synced captions, loop ending, cull top 3. <span class="muted">Status: menunggu assets</span></div></div>
@@ -300,12 +636,29 @@ pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padd
 
 <section class="view" id="v-sync">
   <div class="card">
-    <h3>🔄 Sinkronisasi antar device</h3>
+    <h3><svg
+  class="icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+  <path d="M21 3v5h-5" />
+  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+  <path d="M8 16H3v5" />
+</svg>
+ Sinkronisasi antar device</h3>
     <p class="muted">localStorage tidak sinkron otomatis antar HP/laptop. Solusi: export file <code>workos-backup.json</code> dari device A → import di device B. 10 detik.</p>
     <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
-      <button class="btn" style="background:var(--acc);color:#fff;border:none;border-radius:8px;padding:12px 20px;font-weight:600" onclick="exportJSON()">⬇ Export data (dari device ini)</button>
+      <button class="btn" style="background:var(--acc);color:#fff;border:none;border-radius:8px;padding:12px 20px;font-weight:600" onclick="exportJSON()">Export data (dari device ini)</button>
       <label class="btn" style="background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:12px 20px;font-weight:600;cursor:pointer">
-        ⬆ Import data (ke device ini) <input type="file" accept=".json" style="display:none" onchange="importJSON(this)">
+        Import data (ke device ini) <input type="file" accept=".json" style="display:none" onchange="importJSON(this)">
       </label>
     </div>
     <p class="muted" style="margin-top:12px">Alur tipikal: selesai kerja di laptop → Export → buka HP → Import. Sebaliknya juga sama. <strong>Export dulu sebelum import</strong> — import menimpa data device tujuan.</p>
@@ -376,7 +729,7 @@ function exportCSV(){
   const blob = new Blob([rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n')],{type:'text/csv'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob); a.download = 'outreach_tracker_export.csv'; a.click();
-  document.getElementById('export-note').textContent = ' ✓ terunduh';
+  document.getElementById('export-note').textContent = ' terunduh';
 }
 
 /* ---------- checklists ---------- */
@@ -494,11 +847,11 @@ function renderDM(){
     const tr = (state.tracker||[]).find(t=>t.lead===leadName);
     const phone = tr ? tr.phone : '';
     if(phone) links.push(`<a class="ctlink" href="sms:${phone.replace(/[^+0-9]/g,'')}">SMS</a>`);
-    const editBtn = `<button class="copybtn" style="margin:0" onclick="editContact('${leadName.replace(/'/g,"\'")}')">✎ kontak</button>`;
+    const editBtn = `<button class="copybtn" style="margin:0" onclick="editContact('${leadName.replace(/'/g,"\'")}')">kontak</button>`;
     const d = document.createElement('div');
     d.innerHTML = `<div class="dmhead"><b>${head.replace(/\(.*$/,'').trim()}</b><span style="display:flex;gap:6px;align-items:center">${links.join(' ')}<button class="copybtn" style="margin:0">Copy</button>${editBtn}</span></div><div class="dmcard">${body}</div>`;
     d.querySelector('.copybtn:not([onclick])').onclick=e=>{
-      navigator.clipboard.writeText(body + contactSig()); e.target.textContent='✓ Tersalin!';
+      navigator.clipboard.writeText(body + contactSig()); e.target.textContent='Tersalin!';
       setTimeout(()=>e.target.textContent='Copy',900);
     };
     el.appendChild(d);
@@ -507,7 +860,7 @@ function renderDM(){
   const missing = (state.tracker||[]).filter(t=>!(DATA.clientContacts||{})[t.lead]);
   if(missing.length){
     const d = document.createElement('div');
-    d.innerHTML = `<div class="dmhead"><b>✎ Kontak klien lain (isi manual)</b></div>` +
+    d.innerHTML = `<div class="dmhead"><b>Kontak klien lain (isi manual)</b></div>` +
       missing.map(t=>{
         const c = (state.clientContacts||{})[t.lead]||{};
         return `<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap">
@@ -590,7 +943,7 @@ function importJSON(inp){
       if(!d.tracker) throw new Error('bukan backup WorkOS');
       state = d; save();
       renderTracker(); stats(); renderChecks();
-      alert('✓ Data ter-import! '+state.tracker.length+' leads.');
+      alert('Data ter-import! '+state.tracker.length+' leads.');
     } catch(err){ alert('Gagal import: '+err.message); }
   };
   rd.readAsText(f);
